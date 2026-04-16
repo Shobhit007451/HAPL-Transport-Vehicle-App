@@ -1,0 +1,374 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cloud Attendance App</title>
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- Premium Background Effects -->
+    <div class="bg-shape bg-shape-1"></div>
+    <div class="bg-shape bg-shape-2"></div>
+
+    <!-- Main Navigation Header -->
+    <header>
+        <div class="logo-container">
+            <img src="../assets/transport_app_logo_1773123266142.png" alt="Logo" class="animated-logo" onerror="this.src='https://via.placeholder.com/50';">
+            <h2>HAPL Transport</h2>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#" onclick="showView('home-view')">Home</a></li>
+                <li><a href="#">Contact Us</a></li>
+                <li><a href="#">About Us</a></li>
+                <li><a href="#">Services</a></li>
+                <li><a href="#">Help</a></li>
+            </ul>
+        </nav>
+        <div class="user-header-info" id="userHeaderInfo" style="display:none;">
+            <span id="headerUsername">User</span>
+            <button onclick="logout()" class="btn btn-outline" style="margin-left:1rem;">Logout</button>
+        </div>
+    </header>
+
+    <main id="main-content">
+        <!-- Home View -->
+        <section id="home-view" class="view-section active">
+            <div class="hero-section glass-card">
+                <div class="hero-text">
+                    <h1>Cloud-Based Attendance & Management</h1>
+                    <p>The premium, full-suite solution for tracking and managing transport vehicles effortlessly. Designed for managers, accounting, operators, and supervisors.</p>
+                    <button class="btn btn-primary" onclick="showView('login-view')">Login to System</button>
+                </div>
+                <div class="hero-image">
+                    <img src="../assets/transport_parking_1773123291958.png" alt="Transport Parking" onerror="this.src='';">
+                </div>
+            </div>
+        </section>
+
+        <!-- Login View -->
+        <section id="login-view" class="view-section">
+            <div class="auth-container">
+                <div class="glass-card login-card">
+                    <h2>Login</h2>
+                    <p class="subtitle">Enter your credentials to continue.</p>
+                    <form id="loginForm" onsubmit="handleLogin(event)">
+                        <div class="form-group">
+                            <label for="username">Username/Role</label>
+                            <input type="text" id="username" placeholder="manager, accountant, operator, supervisor" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Password</label>
+                            <input type="password" id="password" placeholder="********" required>
+                        </div>
+                        <div class="form-actions">
+                            <a href="#" class="forgot-link" onclick="openModal('forgotPasswordModal')">Forgot Password?</a>
+                        </div>
+                        <div style="text-align: center; margin-bottom: 1.5rem; margin-top: 1rem;">
+                            <span style="color: var(--text-muted); font-size: 0.9rem;">Don't have an account? <a href="#" class="forgot-link" style="text-decoration: none;" onclick="showView('signup-view')">Sign Up</a></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign In</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Signup View -->
+        <section id="signup-view" class="view-section">
+            <div class="auth-container">
+                <div class="glass-card login-card">
+                    <h2>Create Account</h2>
+                    <p class="subtitle">Join HAPL Transport System.</p>
+                    <form id="signupForm" onsubmit="handleSignup(event)">
+                        <div class="form-group">
+                            <label for="signupUsername">Username</label>
+                            <input type="text" id="signupUsername" placeholder="e.g. new_manager" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupRole">Role</label>
+                            <select id="signupRole" style="width: 100%; padding: 0.8rem; border-radius: 8px; border: 1px solid rgba(255, 255, 255, 0.2); background: rgba(255, 255, 255, 0.05); color: #fff; font-family: 'Inter', sans-serif; font-size: 0.9rem; margin-bottom: 1rem; outline: none; appearance: auto;" required>
+                                <option value="manager" style="color: black;">Manager</option>
+                                <option value="accounting_incharge" style="color: black;">Accountant</option>
+                                <option value="computer_operator" style="color: black;">Operator</option>
+                                <option value="supervisor" style="color: black;">Supervisor</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="signupPassword">Password</label>
+                            <input type="password" id="signupPassword" placeholder="********" required>
+                        </div>
+                        <div style="text-align: center; margin-bottom: 1.5rem; margin-top: 1rem;">
+                            <span style="color: var(--text-muted); font-size: 0.9rem;">Already have an account? <a href="#" class="forgot-link" style="text-decoration: none;" onclick="showView('login-view')">Sign In</a></span>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Sign Up</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- Modals -->
+        <div id="forgotPasswordModal" class="modal-overlay">
+            <div class="glass-card modal-content">
+                <h3>Reset Password</h3>
+                <p class="subtitle" style="text-align: left;">Enter your ID to receive a reset link.</p>
+                <form onsubmit="handleForgotPassword(event)">
+                    <div class="form-group">
+                        <label for="resetId">Login ID</label>
+                        <input type="text" id="resetId" required>
+                    </div>
+                    <div class="modal-actions">
+                        <button type="button" class="btn btn-outline" onclick="closeModal('forgotPasswordModal')">Cancel</button>
+                        <button type="submit" class="btn btn-primary">Send Reset Link</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        
+        <div id="resetSuccessModal" class="modal-overlay">
+            <div class="glass-card modal-content" style="text-align: center;">
+                <i class="fas fa-check-circle" style="font-size: 3rem; color: var(--secondary-color); margin-bottom: 1rem;"></i>
+                <h3>Link Sent!</h3>
+                <p class="subtitle">Check your email to reset your password.</p>
+                <div class="modal-actions" style="justify-content: center;">
+                    <button type="button" class="btn btn-primary" onclick="closeModal('resetSuccessModal')">Close</button>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Dashboard View -->
+        <section id="dashboard-view" class="view-section">
+            <div class="dashboard-layout">
+                <!-- Sidebar Tools -->
+                <aside class="dashboard-sidebar glass-card">
+                    <div class="dropdown-group">
+                        <button class="btn btn-outline w-100 dropdown-toggle" onclick="toggleDropdown('adminDropdown')">Admin <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-menu" id="adminDropdown">
+                            <a href="#">User Management</a>
+                            <a href="#">Settings</a>
+                        </div>
+                    </div>
+                    
+                    <div class="dropdown-group">
+                        <button class="btn btn-outline w-100 dropdown-toggle" onclick="toggleDropdown('dataDropdown')">Data <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-menu" id="dataDropdown">
+                            <a href="#">Vehicle Data</a>
+                            <a href="#">Employee Tracking</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-group">
+                        <button class="btn btn-outline w-100 dropdown-toggle" onclick="toggleDropdown('leaveDropdown')">Leave Options <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-menu" id="leaveDropdown">
+                            <a href="#" onclick="showDashboardTab('leave-apply')">Apply Leave</a>
+                            <a href="#" onclick="showDashboardTab('leave-history')">Leave History</a>
+                            <a href="#" onclick="showDashboardTab('leave-balance')">Leave Balance & Salary</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-group">
+                        <button class="btn btn-outline w-100 dropdown-toggle" onclick="toggleDropdown('reportsDropdown')">Reports <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-menu" id="reportsDropdown">
+                            <a href="#">Daily Reports</a>
+                            <a href="#">Monthly Reports</a>
+                            <a href="#">Periodic Report</a>
+                            <a href="#">Leave Report</a>
+                        </div>
+                    </div>
+
+                    <div class="dropdown-group">
+                        <button class="btn btn-outline w-100 dropdown-toggle" onclick="toggleDropdown('locationDropdown')">Location <i class="fas fa-chevron-down"></i></button>
+                        <div class="dropdown-menu" id="locationDropdown">
+                            <a href="#" onclick="showDashboardTab('location-akola')">Akola (1 Office, 1 Depo)</a>
+                            <a href="#" onclick="showDashboardTab('location-nagpur')">Nagpur (1 Office, 1 Depo)</a>
+                            <a href="#" onclick="showDashboardTab('location-nanded')">Nanded (1 Depo)</a>
+                        </div>
+                    </div>
+                </aside>
+
+                <!-- Main Content Area -->
+                <div class="dashboard-main glass-card">
+                    <!-- Top Widget: Attendance -->
+                    <div class="attendance-widget glass-card">
+                        <div class="attendance-info">
+                            <h3>Live Attendance</h3>
+                            <p id="locationDisplay">Location: Fetching...</p>
+                            <div id="clockDisplay" style="font-size: 1.2rem; color: var(--text-muted); margin-top: 5px;">--:--:--</div>
+                            <p id="timerDisplay" style="font-size: 2rem; font-weight: bold; color: var(--accent); margin-top: 5px; line-height: 1;">00:00</p>
+                            <div id="punchTimesShow" style="margin-top: 5px; font-size: 0.9rem; display: none;">
+                                <div id="punchInTimeShow" style="color: var(--secondary-color);">In: --:--:--</div>
+                                <div id="punchOutTimeShow" style="color: var(--danger);">Out: --:--:--</div>
+                            </div>
+                            <p id="punchStatus" style="color: var(--secondary-color); font-weight: bold; display:none;">Punched In</p>
+                        </div>
+                        <div id="camera-container" style="display:none; margin-top:1rem; text-align:center;">
+                            <video id="video" width="100%" height="auto" autoplay playsinline style="border-radius: 12px; border: 2px solid var(--accent); max-width: 320px;"></video>
+                            <canvas id="canvas" style="display:none;"></canvas>
+                            <div style="margin-top: 0.5rem;">
+                                <button id="captureBtn" class="btn btn-secondary"><i class="fas fa-camera"></i> Capture</button>
+                            </div>
+                        </div>
+                        <div class="attendance-actions">
+                            <button id="punchInBtn" class="btn btn-primary" onclick="handlePunch('in')"><i class="fas fa-camera"></i> Selfie Punch In</button>
+                            <button id="punchOutBtn" class="btn btn-outline" style="color: var(--danger); border-color: var(--danger);" onclick="handlePunch('out')" disabled><i class="fas fa-camera"></i> Selfie Punch Out</button>
+                        </div>
+                    </div>
+
+                    <div class="attendance-history glass-card" style="margin-top: 1.5rem; padding: 1rem;">
+                        <h4 style="margin-bottom: 1rem;"><i class="fas fa-history"></i> Recent Attendance</h4>
+                        <div style="overflow-x: auto;">
+                            <table class="history-table" style="width: 100%; border-collapse: collapse; font-size: 0.9rem;">
+                                <thead>
+                                    <tr style="text-align: left; border-bottom: 1px solid rgba(255,255,255,0.1);">
+                                        <th style="padding: 0.5rem;">Punch In</th>
+                                        <th style="padding: 0.5rem;">Selfie In</th>
+                                        <th style="padding: 0.5rem;">Punch Out</th>
+                                        <th style="padding: 0.5rem;">Selfie Out</th>
+                                        <th style="padding: 0.5rem;">Location</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="attendanceHistoryTable">
+                                    <tr>
+                                        <td colspan="3" style="text-align: center; padding: 1rem; color: var(--text-muted);">No records found</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <hr class="dashboard-divider">
+
+                    <!-- Dynamic Role Views -->
+                    <div id="role-views-container">
+                        <!-- Manager View -->
+                        <div id="role-manager" class="role-section" style="display:none;">
+                            <h3 class="role-title"><i class="fas fa-user-tie"></i> Manager Operations</h3>
+                            <div class="action-grid">
+                                <button class="btn btn-outline">Approve Employee Details to HR</button>
+                                <button class="btn btn-outline">Solve Today's Issue <i class="fas fa-tools"></i></button>
+                                <button class="btn btn-primary">Escalate Pending Issue <i class="fas fa-exclamation-triangle"></i></button>
+                            </div>
+                        </div>
+
+                        <!-- Accounting View -->
+                        <div id="role-accounting_incharge" class="role-section" style="display:none;">
+                            <h3 class="role-title"><i class="fas fa-file-invoice-dollar"></i> Accounting Incharge</h3>
+                            <div class="summary-box black-stroke">
+                                <h4>Daily Allowance Summary</h4>
+                                <div class="toggle-group hover-btn">
+                                    <button class="btn btn-outline active" onclick="toggleBtn(this)">Yes</button>
+                                    <button class="btn btn-outline" onclick="toggleBtn(this)">No</button>
+                                </div>
+                            </div>
+                            <div class="summary-box black-stroke">
+                                <h4>Cash Tally</h4>
+                                <div class="toggle-group hover-btn">
+                                    <button class="btn btn-outline" onclick="toggleBtn(this)">Yes</button>
+                                    <button class="btn btn-outline active" onclick="toggleBtn(this)">No</button>
+                                </div>
+                            </div>
+                            
+                            <div class="summary-box black-stroke">
+                                <h4>Vehicle Status</h4>
+                                <select class="form-group" style="width: auto; margin-bottom: 1rem;"><option>Today</option><option>Yesterday</option></select>
+                                <div style="display:flex; align-items:center; gap: 1rem; margin-bottom:0.5rem;">
+                                    <span>All Vehicles Arrived?</span>
+                                    <div class="toggle-group hover-btn">
+                                        <button class="btn btn-outline btn-small" onclick="toggleBtn(this)">Yes</button>
+                                        <button class="btn btn-outline btn-small active" onclick="toggleBtn(this)">No</button>
+                                    </div>
+                                </div>
+                                <p>Pending Vehicles: <strong id="pendingVehiclesCount">5</strong></p>
+                            </div>
+                        </div>
+
+                        <!-- Operator View -->
+                        <div id="role-computer_operator" class="role-section" style="display:none;">
+                            <h3 class="role-title"><i class="fas fa-desktop"></i> Operator Tasks</h3>
+                            <div class="summary-box">
+                                <p>Did you make the daily reports?</p>
+                                <div class="toggle-group">
+                                    <button class="btn btn-outline active" onclick="toggleBtn(this)">Yes</button>
+                                    <button class="btn btn-outline" onclick="toggleBtn(this)">No</button>
+                                </div>
+                            </div>
+                            <div class="summary-box" style="margin-top: 1rem;">
+                                <p>Stop taken today?</p>
+                                <div class="toggle-group">
+                                    <button class="btn btn-outline" onclick="toggleBtn(this)">Yes</button>
+                                    <button class="btn btn-outline active" onclick="toggleBtn(this)">No</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Supervisor View -->
+                        <div id="role-supervisor" class="role-section" style="display:none;">
+                            <h3 class="role-title"><i class="fas fa-hard-hat"></i> Supervisor Overview</h3>
+                            <div class="action-grid">
+                                <button class="btn btn-outline">View Daily Shift Roster</button>
+                                <button class="btn btn-outline">Report Vehicle Damage</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Dynamic Tabs for Leaves/Locations -->
+                    <div id="content-tabs-container" style="margin-top: 2rem;">
+                        <div id="tab-leave-apply" class="tab-content glass-card" style="display:none;">
+                            <h3>Apply for Leave</h3>
+                            <form style="margin-top:1rem;">
+                                <div class="form-group"><label>Calendar Pick Date</label><input type="date" required></div>
+                                <div style="display:flex; gap:1rem;">
+                                    <div class="form-group w-100"><label>From Date</label><input type="date" required></div>
+                                    <div class="form-group w-100"><label>To Date</label><input type="date" required></div>
+                                </div>
+                                <button type="submit" class="btn btn-primary w-100">Submit Application</button>
+                            </form>
+                        </div>
+                        <div id="tab-leave-history" class="tab-content glass-card" style="display:none;">
+                            <h3>Leave History (Current Year & Month)</h3>
+                            <ul class="styled-list">
+                                <li class="status-approved">Sick Leave: Approved (Jan 12)</li>
+                                <li class="status-pending">Casual Leave: Pending (Mar 15)</li>
+                                <li class="status-rejected">Vacation: Rejected (Feb 20)</li>
+                            </ul>
+                        </div>
+                        <div id="tab-leave-balance" class="tab-content glass-card" style="display:none;">
+                            <h3>Leave Balance & Salary</h3>
+                            <div class="balance-grid">
+                                <div class="balance-item">Total Allocated: <strong style="font-size:1.5rem;">30</strong></div>
+                                <div class="balance-item">Used Leaves: <strong style="font-size:1.5rem; color:var(--accent)">12</strong></div>
+                                <div class="balance-item">Remaining: <strong style="font-size:1.5rem; color:var(--secondary-color)">18</strong></div>
+                            </div>
+                            <div style="margin-top:2rem;">
+                                <h4>Salary Details</h4>
+                                <button class="btn btn-outline" style="margin-top:0.5rem;"><i class="fas fa-file-download"></i> Download Salary Slip (March)</button>
+                            </div>
+                        </div>
+                        
+                        <!-- Location Tabs -->
+                        <div id="tab-location-akola" class="tab-content glass-card" style="display:none;">
+                            <h3>Location Report: Akola</h3>
+                            <p>Facilities: 1 Office, 1 Depo</p>
+                            <p style="margin-top:1rem; color:var(--text-muted)">All vehicles parked securely. Local attendance 100%.</p>
+                        </div>
+                        <div id="tab-location-nagpur" class="tab-content glass-card" style="display:none;">
+                            <h3>Location Report: Nagpur</h3>
+                            <p>Facilities: 1 Office, 1 Depo</p>
+                            <p style="margin-top:1rem; color:var(--text-muted)">1 delayed vehicle due to traffic. Staff present.</p>
+                        </div>
+                        <div id="tab-location-nanded" class="tab-content glass-card" style="display:none;">
+                            <h3>Location Report: Nanded</h3>
+                            <p>Facilities: 1 Depo</p>
+                            <p style="margin-top:1rem; color:var(--text-muted)">Maintenance ongoing for 2 trucks.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+    
+    <script src="app.js"></script>
+</body>
+</html>
