@@ -60,3 +60,25 @@ HAPL/
    # Alternatively: uvicorn main:app --host 127.0.0.1 --port 8001
    ```
 4. Access the application in your browser at `http://127.0.0.1:8001`.
+
+---
+
+## 📸 Project Previews & Output
+
+Here is what the application looks like in action. *(Note: Save your images to the `assets/` folder and name them as shown below, or update the filenames in this file to perfectly match!)*
+
+### Homepage Preview
+<div align="center">
+  <img src="assets/homepage.png" alt="Homepage view" width="700">
+</div>
+
+### User Login Options
+<div align="center">
+  <img src="assets/login.png" alt="Login screen" width="700">
+</div>
+
+### Manager & Live Attendance Dashboard
+<div align="center">
+  <img src="assets/dashboard.png" alt="Manager dashboard output" width="700">
+</div>
+
